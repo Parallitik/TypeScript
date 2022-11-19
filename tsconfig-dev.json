@@ -1,8 +1,8 @@
 {
-	"extends": "./tsconfig.json",
-    "compilerOptions": {
-        "watch": true,
-        "inlineSourceMap": true,
-        "inlineSources": true
-	},
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "watch": true,
+    "inlineSourceMap": true,
+    "inlineSources": true
+  }
 }

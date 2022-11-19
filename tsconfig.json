@@ -1,10 +1,11 @@
 {
-	"compilerOptions": {
-		"strict": true,
-        "outDir": "dist",
-        "target": "es2015",
-        "module": "es2015",
-        "moduleResolution": "node"
-	},
-	"files": ["src/index.ts"]
+  "compilerOptions": {
+    "outDir": "public/scripts",
+    "target": "es2015",
+    "module": "es2015",
+    "moduleResolution": "node"
+  },
+  "files": [
+    "src/index.ts"
+  ]
 }

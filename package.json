@@ -1,18 +1,18 @@
 {
   "name": "typescript",
   "version": "1.0.0",
-  "description": "",
-  "main": "dist/index.js",
   "scripts": {
-    "build": "tsc",
-    "build:dev": "tsc -p tsconfig-dev.json",
-    "start": "node ."
+    "start": "http-server -p 3000",
+    "build": "rm -rf public/scripts && tsc",
+    "build:dev": "rm -rf public/scripts && tsc -p tsconfig-dev.json",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint src --ext .js --ext .ts",
+    "lint-fix": "eslint src --ext .js --ext .ts --fix"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Parallitik/TypeScript.git"
   },
-  "type": "module",
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -21,7 +21,10 @@
   },
   "homepage": "https://github.com/Parallitik/TypeScript#readme",
   "devDependencies": {
-    "@types/node": "^18.11.0",
-    "typescript": "^4.8.4"
+    "@typescript-eslint/eslint-plugin": "^5.43.0",
+    "@typescript-eslint/parser": "^5.43.0",
+    "eslint": "^8.27.0",
+    "http-server": "^14.1.1",
+    "typescript": "^4.9.3"
   }
 }

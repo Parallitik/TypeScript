@@ -1,36 +1,14 @@
-const getStartPoint = ():number | undefined => {
-    const startPoint = process.argv[2];
-    if (startPoint) return (+startPoint);
-    if (startPoint === undefined) return undefined;
-}
+import { renderSearchFormBlock } from './search-form.js'
+import { renderSearchStubBlock } from './search-results.js'
+import { renderUserBlock } from './user.js'
+import { renderToast } from './lib.js'
 
-const checkTypePoint = () => {
-    let startPoint = getStartPoint();
-    if (startPoint) {
-        return startPoint
-    } else {
-        console.log('Вы ввели неверные параметры, необходимо ввести цифру');
-        return 0
-    }
-}
-
-const endPoint = 0;
-let timerPoint = checkTypePoint()
-
-const getFullMsg = (num: number) => {
-    return `Осталось ${num} секунд!`
-}
-
-const timer = setInterval(() => {
-    if(timerPoint > 0) {
-        console.log(getFullMsg(timerPoint));
-        timerPoint -= 1;
-    } else {
-        timerEnd()
-    }
-}, 1000)
-
-const timerEnd = () => {
-    clearInterval(timer);
-    console.log('Время вышло');
-};
+window.addEventListener('DOMContentLoaded', () => {
+  renderUserBlock('Wade Warren', './img/avatar.png', 1)
+  renderSearchFormBlock()
+  renderSearchStubBlock()
+  renderToast(
+    {text: 'Это пример уведомления. Используйте его при необходимости', type: 'success'},
+    {name: 'Понял', handler: () => {console.log('Уведомление закрыто')}}
+  )
+})
