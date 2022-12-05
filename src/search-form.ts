@@ -1,6 +1,35 @@
 import { renderBlock } from './lib.js'
 
-export function renderSearchFormBlock(CheckInDate: string = '', CheckOutDate: string = '') {
+interface SearchFormData {
+  city: string
+  checkInDate: Date
+  checkOutDate: Date
+  maxPricePerDay: number
+} 
+
+export function getFormData(): void {
+  const form = document.getElementById('form') as HTMLFormElement;
+  form.addEventListener('submit', (e: SubmitEvent) => {
+    e.preventDefault();
+    const inputCity  = document.getElementById('city') as HTMLInputElement
+    const inputCheckInDate = document.getElementById('check-in-date') as HTMLInputElement
+    const inputCheckOutDate = document.getElementById('check-out-date') as HTMLInputElement
+    const inputMaxPricePerDay = document.getElementById('max-price') as HTMLInputElement
+    const formData: SearchFormData = {
+      city: inputCity.value,
+      checkInDate: new Date(inputCheckInDate.value),
+      checkOutDate: new Date(inputCheckOutDate.value),
+      maxPricePerDay: Number(inputMaxPricePerDay.value)
+    }
+  getSearchData(formData);
+  })
+}
+
+export function getSearchData(data: SearchFormData): void {
+ console.log(data);
+}
+
+export function renderSearchFormBlock(checkInDate: string = '', checkOutDate: string = '') {
   const getToday = () => {
     let today = new Date();
     let yearOut = today.getFullYear();
@@ -13,11 +42,10 @@ export function renderSearchFormBlock(CheckInDate: string = '', CheckOutDate: st
     let today = new Date();
     let tommorow = today.setDate(today.getDate() + 1);
     let yearOut = new Date(tommorow).getFullYear();
-    let monthOut = new Date(tommorow).getMonth();
-    let dayOut = new Date(tommorow).getDate(); 
+    let monthOut = new Date(tommorow).getMonth() + 1;
+    let dayOut = new Date(tommorow).getDate();
     return `${yearOut}-${monthOut}-${dayOut}`
   }
-  
 
   const getDefaultCheckOutDate = () => {
     let [year, month, day] = getDefaultCheckInDate().split('-');
@@ -26,7 +54,7 @@ export function renderSearchFormBlock(CheckInDate: string = '', CheckOutDate: st
     let checkOutDate = new Date(checkOutDay)
     let yearOut = new Date(checkOutDate).getFullYear();
     let monthOut = new Date(checkOutDate).getMonth()
-    let dayOut = new Date(checkOutDate).getDate(); 
+    let dayOut = new Date(checkOutDate).getDate();  
     return `${yearOut}-${monthOut}-${dayOut}`
   }
 
@@ -34,7 +62,7 @@ export function renderSearchFormBlock(CheckInDate: string = '', CheckOutDate: st
     let today = new Date();
     let nextMonth = today.setMonth(today.getMonth() + 2);
     let getMonth = new Date(nextMonth).getMonth()
-    
+
     let lastDay = new Date(today.getFullYear(), getMonth, 0)
 
     let yearOut = new Date(lastDay).getFullYear();
@@ -47,7 +75,7 @@ export function renderSearchFormBlock(CheckInDate: string = '', CheckOutDate: st
   renderBlock(
     'search-form-block',
     `
-    <form>
+    <form id="form">
       <fieldset class="search-filedset">
         <div class="row">
           <div>
@@ -63,11 +91,11 @@ export function renderSearchFormBlock(CheckInDate: string = '', CheckOutDate: st
         <div class="row">
           <div>
             <label for="check-in-date">Дата заезда</label>
-            <input id="check-in-date" type="date" value="${CheckInDate ? CheckInDate : getDefaultCheckInDate()}" min="${getToday()}" max="${getLastDayOfNextMonth()}" name="checkin" />
+            <input id="check-in-date" type="date" value="${checkInDate ? checkInDate : getDefaultCheckInDate()}" min="${getToday()}" max="${getLastDayOfNextMonth()}" name="checkin" />
           </div>
           <div>
             <label for="check-out-date">Дата выезда</label>
-            <input id="check-out-date" type="date" value="${CheckOutDate ? CheckOutDate : getDefaultCheckOutDate()}" min="${getToday()}" max="${getLastDayOfNextMonth()}" name="checkout" />
+            <input id="check-out-date" type="date" value="${checkOutDate ? checkOutDate : getDefaultCheckOutDate()}" min="${getToday()}" max="${getLastDayOfNextMonth()}" name="checkout" />
           </div>
           <div>
             <label for="max-price">Макс. цена суток</label>
@@ -82,3 +110,4 @@ export function renderSearchFormBlock(CheckInDate: string = '', CheckOutDate: st
     `
   )
 }
+  

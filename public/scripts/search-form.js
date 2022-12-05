@@ -1,5 +1,25 @@
 import { renderBlock } from './lib.js';
-export function renderSearchFormBlock(CheckInDate = '', CheckOutDate = '') {
+export function getFormData() {
+    const form = document.getElementById('form');
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const inputCity = document.getElementById('city');
+        const inputCheckInDate = document.getElementById('check-in-date');
+        const inputCheckOutDate = document.getElementById('check-out-date');
+        const inputMaxPricePerDay = document.getElementById('max-price');
+        const formData = {
+            city: inputCity.value,
+            checkInDate: new Date(inputCheckInDate.value),
+            checkOutDate: new Date(inputCheckOutDate.value),
+            maxPricePerDay: Number(inputMaxPricePerDay.value)
+        };
+        getSearchData(formData);
+    });
+}
+export function getSearchData(data) {
+    console.log(data);
+}
+export function renderSearchFormBlock(checkInDate = '', checkOutDate = '') {
     const getToday = () => {
         let today = new Date();
         let yearOut = today.getFullYear();
@@ -11,7 +31,7 @@ export function renderSearchFormBlock(CheckInDate = '', CheckOutDate = '') {
         let today = new Date();
         let tommorow = today.setDate(today.getDate() + 1);
         let yearOut = new Date(tommorow).getFullYear();
-        let monthOut = new Date(tommorow).getMonth();
+        let monthOut = new Date(tommorow).getMonth() + 1;
         let dayOut = new Date(tommorow).getDate();
         return `${yearOut}-${monthOut}-${dayOut}`;
     };
@@ -36,7 +56,7 @@ export function renderSearchFormBlock(CheckInDate = '', CheckOutDate = '') {
         return `${yearOut}-${monthOut}-${dayOut}`;
     };
     renderBlock('search-form-block', `
-    <form>
+    <form id="form">
       <fieldset class="search-filedset">
         <div class="row">
           <div>
@@ -52,11 +72,11 @@ export function renderSearchFormBlock(CheckInDate = '', CheckOutDate = '') {
         <div class="row">
           <div>
             <label for="check-in-date">Дата заезда</label>
-            <input id="check-in-date" type="date" value="${CheckInDate ? CheckInDate : getDefaultCheckInDate()}" min="${getToday()}" max="${getLastDayOfNextMonth()}" name="checkin" />
+            <input id="check-in-date" type="date" value="${checkInDate ? checkInDate : getDefaultCheckInDate()}" min="${getToday()}" max="${getLastDayOfNextMonth()}" name="checkin" />
           </div>
           <div>
             <label for="check-out-date">Дата выезда</label>
-            <input id="check-out-date" type="date" value="${CheckOutDate ? CheckOutDate : getDefaultCheckOutDate()}" min="${getToday()}" max="${getLastDayOfNextMonth()}" name="checkout" />
+            <input id="check-out-date" type="date" value="${checkOutDate ? checkOutDate : getDefaultCheckOutDate()}" min="${getToday()}" max="${getLastDayOfNextMonth()}" name="checkout" />
           </div>
           <div>
             <label for="max-price">Макс. цена суток</label>
